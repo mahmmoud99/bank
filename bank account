@@ -1,0 +1,373 @@
+import java.util.ArrayList;
+
+public class client extends person{
+    ArrayList<String> list = new ArrayList<>();
+    private int pasword;
+    private float balance;
+    void setPasword(int  n){
+        pasword=n;
+    }
+
+    public client() {
+
+    }
+
+    public client(String name, int id, float balance, int password ) {
+        super(id, name);
+        this.balance = balance;
+        this.pasword = pasword;
+
+    }
+
+    int getPasword() {
+        return pasword;
+    }
+
+     void setBalance(float n) {
+        balance = n;
+    }
+     float getBalance(){
+        return balance;
+     }
+     public void checkbalance(){
+         System.out.println("your balance is "+ balance);
+     }
+
+    public void deposit(double amount, int Id) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited " + amount );
+            list.add("Deposited "+amount +"your new balance is  "+ balance);
+
+        } else {
+            System.out.println("Invalid ");
+        }
+    }
+    public void withdraw(double amount ,int Id) {
+        if (amount > balance) {
+            System.out.println("Invalid Your balance is " + balance);
+        } else if (amount > 0&&amount<=balance) {
+            balance -= amount;
+            System.out.println("Withdrew " + amount );
+            list.add("Withdraw "+amount +"your new balance is  "+ balance);
+        } else {
+            System.out.println("Invalid withdrawal amount.");
+        }
+    }
+    public void CeckAccount(){
+        System.out.println("name "+getname());
+        System.out.println("Id "+getId());
+        System.out.println("Balance "+getBalance());
+        System.out.println("Age "+getage());
+        System.out.println("phone number "+getPhoneNumber());
+
+    }
+
+    public void History() {
+        for (String entry : list) {
+            System.out.println(entry);
+        }
+    }
+
+
+import java.util.Scanner;
+
+public class employee  extends person{
+    Scanner in =new Scanner(System.in);
+   private float salary;
+   private int password;
+
+    public employee(int id, String name) {
+        super(id, name);
+    }
+
+    void setPassword(int n){
+       password=n;
+   }
+   int getPassword(){
+       return password;
+   }
+
+
+   void setSalary(float n){
+       salary=n;
+   }
+
+     float getSalary() {
+        return salary;
+    }
+    public client addClient(String name, int id, float balance, int password) {
+       client c=new client(name ,id,balance,password);
+
+
+        return   c ;
+    }
+
+    public void CheckMyInformation(){
+        System.out.println("Name : "+getname());
+        System.out.println("ID : "+getId());
+        System.out.println("salary : "+getSalary());
+        System.out.println("phone number : "+getPhoneNumber());
+        System.out.println("Age : "+ getage());
+
+    }
+
+
+public class person {
+   int Id;
+     private String name;
+    private int age;
+    private int PhoneNumber;
+
+    public person(int id, String name) {
+        Id = id;
+        this.name = name;
+
+    }
+public person(){}
+    void setName(String n){
+    name=n;
+
+}
+String getname(){
+    return name;
+}
+ void setId(int n){
+    Id=n;
+ }
+ int getId(){
+    return Id;
+ }
+ void setage(int n){
+    age=n;
+ }
+ int getage(){
+    return age;
+ }
+void setPhoneNumber(int n){
+    PhoneNumber=n;
+}
+int getPhoneNumber(){
+    return PhoneNumber;
+}
+
+
+
+}
+
+
+public class Admin extends employee{
+    private int password;
+
+    public Admin(int id, String name) {
+        super(id, name);
+    }
+
+    void setPassword(int a){
+        password=a;
+    }
+    int getAdminId(){
+        return password;
+    }
+    public employee addemployee(String name, int id, float salary, int password) {
+
+
+        employee c=new employee(id,name );
+        return  c;
+    }
+
+}
+
+
+
+import java.util.Objects;
+import java.util.Scanner;
+
+public class Main {
+
+
+
+    public static void main(String[] args) {
+        Admin admin = new Admin(1, "mahmoud");
+        admin.setPassword(1415);
+        admin.setName("mahmoud");
+        admin.setage(35);
+        admin.setId(1);
+        admin.setPhoneNumber(48);
+        admin.setSalary(20000);
+
+        employee employee = new employee(2, "ahmed");
+        employee.setPassword(4567);
+        employee.setSalary(14500);
+        employee.setId(2);
+        employee.setPhoneNumber(45);
+        employee.setName("ahmed");
+        employee.setage(25);
+        client client= new client();
+        client.setBalance(4000);
+        client.setId(1234);
+        client.setPasword(789);
+        client.setName("ahmed");
+        client.setPhoneNumber(989);
+        client.setage(45);
+        Scanner in = new Scanner(System.in);
+        System.out.println("1- Admin");
+        System.out.println("2- employee");
+        System.out.println("3- Client");
+
+        int x = in.nextInt();
+        switch (x) {
+            case 1:                                             // Admin
+                System.out.print("Enter Admin Name: ");
+                String AdminName = in.next();
+                System.out.println("hello"+ AdminName);
+
+                System.out.println("Enter your password");
+                int Adminpassword  = in.nextInt();
+                if (Objects.equals(AdminName, "mahmoud") &&  Adminpassword==admin.getPassword()) {
+                    System.out.println("hello how can I help you");
+                    System.out.println("1-Add Client ");
+                    System.out.println("2-Add Employee");
+                    int n = in.nextInt();
+                    switch (n) {
+                        case 1:                                                           //Addclient   For Admin
+                            client c = new client();
+                            System.out.println("enter your name ");
+                           String clientName = in.next();
+
+                            System.out.println("enter balance ");
+                            float balance = in.nextFloat();
+                            System.out.println("enter Id");
+                            int Id = in.nextInt();
+                            System.out.println("enter password");
+                            int clientpassword = in.nextInt();
+                            admin.addClient(clientName, Id, balance, clientpassword);
+                            System.out.println("done");
+                            break;
+
+
+                        case 2:                                                           //Addemployee  for Admin
+                            System.out.println("enter your name ");
+                            String EmployeeName = in.next();
+                            System.out.println("enter balance ");
+                            float salary = in.nextFloat();
+                            System.out.println("enter Id");
+                            Id = in.nextInt();
+                            System.out.println("enter password");
+                            int emppassword = in.nextInt();
+
+                            admin.addemployee(EmployeeName, Id, salary, emppassword);
+                            break;
+
+                        default:
+                            System.out.println("not valid");
+                    }
+
+
+                } else
+                    System.out.println("Invalid try again later");
+
+
+                break;
+            case 2:                                               //employee
+
+
+                System.out.print("Enter your Id: ");
+                int n = in.nextInt();
+                System.out.println("Enter your password");
+                int paassword = in.nextInt();
+                if (n ==employee.getId() && paassword == employee.getPassword()) {
+                    System.out.println("hello how can I help you");
+                    System.out.println("1-Add Client");
+                    System.out.println("2-check Your information");
+                    int s = in.nextInt();
+                    switch (s) {
+                        case 1:                         //Add Client
+                            client c = new client();
+                            System.out.println("enter your name ");
+                            String clientName = in.next();
+
+                            System.out.println("enter balance ");
+                            float balance = in.nextFloat();
+                            System.out.println("enter Id");
+                            int Id = in.nextInt();
+                            System.out.println("enter password");
+                            int clientpassword = in.nextInt();
+                            admin.addClient(clientName, Id, balance, clientpassword);
+                            System.out.println("done");
+
+
+                        case 2:                                   //Ceck information
+                            employee.CheckMyInformation();
+
+                         break;
+                    }
+
+
+                }
+
+
+                break;
+
+            case 3:                                               //client
+                System.out.println("enter your name");
+                String clientname=in.next();
+                System.out.println("enter your password");
+                int clientPassword= in.nextInt();
+
+                if(Objects.equals(clientname, "ahmed") && clientPassword==client.getPasword()){
+                    System.out.println("1- Deposit");
+                    System.out.println("2- Withdrew");
+                    System.out.println("3- checkbalance");
+                    System.out.println("4- CeckAccount");
+                    System.out.println("5- Cleint history");
+                    int m=in.nextInt();
+                    switch (m){
+                        case 1:                                            //deposit
+                            System.out.println("please enter you amount");
+                            float amount=in.nextFloat();
+                            client.deposit( amount, client.getId()  );
+                            System.out.println(client.getBalance());
+                            break;
+                        case 2:                                               //whitdraw
+                            System.out.println("please enter you amount");
+                             amount=in.nextFloat();
+                            client.withdraw(amount,client.getId());
+                            System.out.println(client.getBalance());
+                            break;
+                        case 3:                                                //checkbalance
+                            client.checkbalance();
+                            break;
+                        case 4:                                                //CeckAccount
+                            client.CeckAccount();
+                            break;
+                        case 5 :
+
+                            client.deposit(500, 1234);
+                            client.withdraw(500, 1234);
+
+
+
+                            client.History();
+
+                            break;
+
+
+
+
+
+                    }
+
+
+
+
+
+                }else
+                    System.out.println("try again later ");
+
+                }
+
+        }
+
+
+   }
